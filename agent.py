@@ -7,7 +7,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.checkpoint.memory import MemorySaver
 from dotenv import load_dotenv
 
-# Import the State and tools from the files we created
+# Import state schema and custom tool implementations
 from state import AgentState
 from tools import (
     create_drive_folder,
@@ -17,20 +17,20 @@ from tools import (
     notify_manager
 )
 
-# טעינת המשתנים מקובץ ה-.env
+# Load environment configuration
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
     print("Error: GEMINI_API_KEY not found in .env file!")
 
-# LLM definition
+# Initialize LLM client
 llm = ChatGoogleGenerativeAI(
     model="gemini-flash-latest",
-    #temperature=0,
     google_api_key=api_key
 )
-# Grouping the tools that the model is allowed to use
+
+# Register external tools available to the model
 tools_list = [
     create_drive_folder,
     check_drive_uploads,
@@ -39,18 +39,17 @@ tools_list = [
     notify_manager
 ]
 
-# Bind the tools to the LLM
+# Bind tools to the model instance
 llm_with_tools = llm.bind_tools(tools_list)
 
-# Initialize the graph with our State
+# Initialize the state graph with the unified AgentState schema
 workflow = StateGraph(AgentState)
 
 
 # ==========================================
-# Nodes
+# Graph Nodes
 # ==========================================
 
-# 1
 def find_space_to_save(state: AgentState):
     """Node: Analyzes event details and suggests a Google Drive folder path."""
     print("\n[Node] Executing 'find_space_to_save'...")
@@ -77,7 +76,7 @@ def find_space_to_save(state: AgentState):
 
     response = llm.invoke(prompt_messages)
 
-    # Safe extraction of the text, whether it arrives as a string or a list of blocks
+    # Safe extraction of text content regardless of response format
     content = response.content
     if isinstance(content, list):
         if len(content) > 0 and isinstance(content[0], dict):
@@ -92,12 +91,11 @@ def find_space_to_save(state: AgentState):
     return {
         "suggested_folder_path": suggested_path,
         "folder_approval_status": "pending",
-        "user_feedback": "",  # <--- השורה הקריטית שנוספה: מנקה את הפידבק אחרי השימוש כדי למנוע לולאה אינסופית
+        "user_feedback": "",  # Clear feedback post-consumption to prevent recursive loops
         "messages": [SystemMessage(content=f"Suggested folder path: {suggested_path}")]
     }
 
 
-# 2
 def create_drive_space(state: AgentState):
     """Node: Creates the actual folder in Google Drive with error handling."""
     print("\n[Node] Executing 'create_drive_space'...")
@@ -105,7 +103,7 @@ def create_drive_space(state: AgentState):
     final_path = state.get("approved_folder_path") or state.get("suggested_folder_path")
 
     try:
-        # Call the drive creation tool
+        # Execute Google Drive folder provisioning
         folder_url = create_drive_folder.invoke(final_path)
         print(f"[Node] Folder created successfully! URL: {folder_url}")
 
@@ -116,11 +114,10 @@ def create_drive_space(state: AgentState):
         }
 
     except Exception as e:
-        # Graceful failure handling
+        # Handle third-party API failures and notify administration
         error_msg = f"Failed to create Google Drive folder at path '{final_path}': {str(e)}"
         print(f"[Node Error] {error_msg}")
 
-        # Alert the manager immediately so they can fix permissions/quota
         notify_manager.invoke({
             "subject": "שגיאת מערכת: כשל ביצירת תיקיית Drive",
             "message": f"הסוכן נתקל בשגיאה ביצירת התיקייה בנתיב: {final_path}.\nפירוט השגיאה: {str(e)}\nהתהליך הופסק זמנית."
@@ -132,7 +129,6 @@ def create_drive_space(state: AgentState):
         }
 
 
-# 3
 def gather_updates(state: AgentState):
     """Node: Uses tools to fetch Drive uploads and incoming team messages."""
     print("\n[Node] Executing 'gather_updates'...")
@@ -157,26 +153,27 @@ def gather_updates(state: AgentState):
     }
 
 
-# 4
 def evaluate_and_filter(state: AgentState):
     """Node: The Brain. Evaluates who is still missing based on files and messages."""
     print("\n[Node] Executing 'evaluate_and_filter'...")
 
     missing = state.get("missing_attendees", [])
 
+    # Bypass LLM invocation if the list is already empty to save time and API costs
     if not missing:
         print("[Node] No missing attendees left!")
         return {"collection_phase_status": "finished", "trigger_post_creation": True}
 
     last_system_msg = state["messages"][-1].content
 
-    # UPDATED PROMPT: Strictly define when to remove someone from the list
+    # Instruction defining strict logical criteria for attendance list updates.
+    # CRITICAL FIX: Expanded exemption criteria to include lack of media.
     system_instruction = (
         "You are managing a missing attendees list for a media collection event. "
         f"Current missing attendees: {missing}\n\n"
         "Read the system update. Team messages will be in Hebrew. Remove an attendee from the missing list IF AND ONLY IF:\n"
         "1. The System Update explicitly shows a file was uploaded by them.\n"
-        "2. They sent a message indicating they are EXEMPT (e.g., 'הייתי חולה', 'לא הייתי באירוע').\n"
+        "2. They sent a message indicating they are EXEMPT or CANNOT PROVIDE MEDIA (e.g., 'הייתי חולה', 'לא הייתי באירוע', 'אין לי תמונות', 'שכחתי לצלם').\n"
         "CRITICAL: Do NOT remove them if they merely claim to have uploaded, but their name is NOT in the new files list.\n"
         "Return ONLY a valid JSON array of strings containing the updated missing attendees."
     )
@@ -188,7 +185,7 @@ def evaluate_and_filter(state: AgentState):
 
     response = llm.invoke(prompt_messages)
 
-    # Safe extraction mechanism
+    # Safe extraction of structured output from LLM response
     content = response.content
     if isinstance(content, list):
         if len(content) > 0 and isinstance(content[0], dict):
@@ -198,10 +195,12 @@ def evaluate_and_filter(state: AgentState):
     else:
         raw_text = str(content)
 
+    # Robust JSON parsing block.
     try:
         clean_text = raw_text.replace("```json", "").replace("```", "").strip()
         updated_missing = json.loads(clean_text)
 
+        # Ensure the output format strictly remains a list of strings
         if isinstance(updated_missing, dict):
             lists = [v for v in updated_missing.values() if isinstance(v, list)]
             updated_missing = lists[0] if lists else missing
@@ -214,13 +213,14 @@ def evaluate_and_filter(state: AgentState):
 
     print(f"[Node] Updated missing attendees list: {updated_missing}")
 
+    # Determine collection status based on the updated list length
     status = "running"
     ready_for_post = False
     if len(updated_missing) == 0:
         status = "finished"
         ready_for_post = True
-        ###############################################
-        # Notify the manager immediately that media collection is 100% complete
+
+        # Trigger manager completion notification immediately upon finishing the task
         event_title = state.get("event_name", "אירוע ללא שם")
         notify_manager.invoke({
             "subject": f"איסוף המדיה הושלם: {event_title}",
@@ -235,12 +235,11 @@ def evaluate_and_filter(state: AgentState):
     }
 
 
-# 5a
 def reply_to_messages(state: AgentState):
-    """Node: Handles ONLY replying to incoming messages without reminding."""
+    """Node: Handles replying to incoming messages without issuing general reminders."""
     print("\n[Node] Executing 'reply_to_messages'...")
 
-    # UPDATED PROMPT: Cross-reference user claims with actual system files
+    # Contextual instruction: Ensures the agent provides accurate support by cross-referencing user claims.
     system_instruction = (
         "You are a polite assistant managing team communications.\n"
         "Your ONLY task is to read recent incoming messages in the system update and reply to them.\n"
@@ -261,6 +260,7 @@ def reply_to_messages(state: AgentState):
 
     response = llm_with_tools.invoke(prompt_messages)
 
+    # Track actions taken by the LLM for logging and debugging
     action_summary = []
     if hasattr(response, 'tool_calls') and response.tool_calls:
         for tool_call in response.tool_calls:
@@ -270,14 +270,13 @@ def reply_to_messages(state: AgentState):
     else:
         action_summary.append("No replies needed.")
 
-    print(f"[Node] Reply summary: {action_summary}")
+    # Removed the redundant 'Reply summary' print statement for a cleaner CLI output.
 
     return {"messages": [SystemMessage(content=f"Replies executed: {action_summary}")]}
 
 
-# 5b
 def send_reminders(state: AgentState):
-    """Node: Handles initial requests and sending progressive reminders to missing attendees."""
+    """Node: Dispatches initial requests and progressive reminders to missing attendees."""
     print("\n[Node] Executing 'send_reminders'...")
 
     missing = state.get("missing_attendees", [])
@@ -285,7 +284,7 @@ def send_reminders(state: AgentState):
     current_count = state.get("reminder_count", 0)
     folder_url = state.get("folder_url", "URL_NOT_FOUND")
 
-    # Define tone and instructions dynamically based on reminder iteration
+    # Determine progressive escalation tone based on reminder round count
     if current_count == 0:
         tone_instruction = (
             "This is the FIRST outreach. Send a warm, friendly invitation to upload media. "
@@ -340,9 +339,9 @@ def send_reminders(state: AgentState):
         "messages": [SystemMessage(content=f"Messages executed at {current_time}: {action_summary}")]
     }
 
-# 6
+
 def escalate_to_human(state: AgentState):
-    """Node: Escalates to the manager when a team member ignores max reminders."""
+    """Node: Escalates to the manager when attendees remain unresponsive past the reminder threshold."""
     print("\n[Node] Executing 'escalate_to_human'...")
 
     missing = state.get("missing_attendees", [])
@@ -363,39 +362,38 @@ def escalate_to_human(state: AgentState):
 # ==========================================
 
 def route_from_start(state: AgentState) -> str:
-    """Router 1: Decides where the agent should start when it wakes up."""
+    """Router 1: Determines entry node based on folder approval state."""
     if state.get("folder_approval_status") == "approved":
         return "gather_updates"
     return "find_space_to_save"
 
 
 def route_after_path_suggestion(state: AgentState) -> str:
-    """Router 2: Handle human-in-the-loop feedback for folder path."""
+    """Router 2: Evaluates whether manager requested path revisions."""
     if state.get("user_feedback"):
         return "find_space_to_save"
     return "create_drive_space"
 
 
 def route_after_drive_creation(state: AgentState) -> str:
-    """Route to reminders if folder exists, or terminate if creation failed."""
+    """Router 3: Verifies successful Drive folder creation before sending reminders."""
     if state.get("collection_phase_status") == "error":
         return END
     return "send_reminders"
 
 
 def route_after_reply(state: AgentState) -> str:
-    """Router 3: The Main Decision Engine. Happens AFTER replying to messages."""
-
-    # 1. אם הרשימה התרוקנה - סיימנו בהצלחה!
+    """Router 4: Evaluates completion status, wakeup triggers, and reminder thresholds."""
+    # Terminate workflow if collection completed
     if state.get("collection_phase_status") == "finished" or len(state.get("missing_attendees", [])) == 0:
         return END
 
-    # 2. אם הבוט התעורר *רק* בגלל שמישהו שלח הודעה - הוא עונה וחוזר לישון (ללא תזכורות)
+    # Message-only wakeups return to sleep without dispatching reminders
     if state.get("wakeup_reason") == "message":
         print("[Router] Woke up for message only. Going back to sleep without reminding.")
         return END
 
-    # 3. מפה והלאה - הבוט התעורר מטיימר. נבדוק אם להסלים או לתזכר:
+    # Timer wakeup: evaluate whether to escalate or dispatch reminder round
     if state.get("reminder_count", 0) >= 3:
         return "escalate_to_human"
 
@@ -403,10 +401,10 @@ def route_after_reply(state: AgentState) -> str:
 
 
 # ==========================================
-# Graph Compilation (The Blueprint)
+# Graph Compilation
 # ==========================================
 
-# 1. Add all nodes
+# Register nodes
 workflow.add_node("find_space_to_save", find_space_to_save)
 workflow.add_node("create_drive_space", create_drive_space)
 workflow.add_node("gather_updates", gather_updates)
@@ -415,33 +413,30 @@ workflow.add_node("reply_to_messages", reply_to_messages)
 workflow.add_node("send_reminders", send_reminders)
 workflow.add_node("escalate_to_human", escalate_to_human)
 
-# 2. Define the flow (Edges)
+# Connect graph edges and conditional routing
 workflow.add_conditional_edges(START, route_from_start)
 workflow.add_conditional_edges("find_space_to_save", route_after_path_suggestion)
 
-#workflow.add_edge("create_drive_space", "send_reminders")
-workflow.add_conditional_edges("create_drive_space", route_after_drive_creation,
-                               {"send_reminders": "send_reminders",END: END})
-workflow.add_edge("gather_updates", "evaluate_and_filter")
+workflow.add_conditional_edges(
+    "create_drive_space",
+    route_after_drive_creation,
+    {"send_reminders": "send_reminders", END: END}
+)
 
-# THE CRITICAL FIX: From the "Brain" node, ALWAYS proceed to reply to messages!
+workflow.add_edge("gather_updates", "evaluate_and_filter")
 workflow.add_edge("evaluate_and_filter", "reply_to_messages")
 
-# Only AFTER replying to messages, the main router decides what to do next (END / escalate / remind)
+# Evaluate routing decisions post message reply handling
 workflow.add_conditional_edges("reply_to_messages", route_after_reply)
 
-# Terminal nodes always go to END
+# Terminal edges
 workflow.add_edge("send_reminders", END)
 workflow.add_edge("escalate_to_human", END)
 
-# 3. Compile
+# Compile graph with state checkpointing and interrupt configuration
 memory = MemorySaver()
 
 app = workflow.compile(
     checkpointer=memory,
     interrupt_before=["create_drive_space"]
 )
-
-# Generate and print the Mermaid diagram syntax for the graph
-#print("\n--- Mermaid Graph Visualization ---")
-#print(app.get_graph().draw_mermaid())
