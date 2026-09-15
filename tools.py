@@ -53,6 +53,12 @@ def check_drive_uploads(folder_url: str) -> list:
 @tool
 def read_team_messages(event_id: str) -> list:
     """Fetches new messages from the team members."""
+    env = os.getenv("ENVIRONMENT", "development").lower()
+    
+    if env == "production":
+        # In production, participant messages are injected directly into state via webhook
+        return []
+
     # Only prompt for incoming messages if explicitly requested via the simulation menu
     if os.getenv("MOCK_PROMPT_TYPE") != "chat":
         return []

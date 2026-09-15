@@ -3,7 +3,7 @@ import os
 import requests
 from langgraph.types import Command
 from agent import app as graph_app
-from user_directory import get_manager_chat_id
+from user_directory import get_manager_chat_id, get_user_info_by_chat_id
 
 app = FastAPI(title="Digi-Media-Agent Webhook Server")
 
@@ -58,26 +58,35 @@ async def telegram_webhook(request: Request):
         if "message" in update:
             msg = update["message"]
             chat_id = str(msg["chat"]["id"])
-            if chat_id != str(manager_chat_id):
-                return {"status": "ignored"}
-                
             text = msg.get("text", "")
             
-            if manager_state.get("awaiting_feedback") and text:
-                manager_state["awaiting_feedback"] = False
+            if chat_id == str(manager_chat_id):
+                if manager_state.get("awaiting_feedback") and text:
+                    manager_state["awaiting_feedback"] = False
+                    graph_app.update_state(config, {"user_feedback": text})
+                    for _ in graph_app.stream(Command(resume=True), config):
+                        pass
+                    return {"status": "ok"}
+                elif text.startswith("אירוע חדש:"):
+                    graph_app.update_state(config, {"manager_raw_prompt": text})
+                    for _ in graph_app.stream(None, config):
+                        pass
+                    send_msg(chat_id, "קיבלתי! מתחיל לתכנן את האירוע...")
+                    return {"status": "ok"}
+            
+            if text:
+                user_info = get_user_info_by_chat_id(chat_id)
+                if user_info:
+                    email, name = user_info
+                else:
+                    email, name = "Unknown", "Unknown Participant"
                 
-                graph_app.update_state(config, {"user_feedback": text})
-                for _ in graph_app.stream(Command(resume=True), config):
-                    pass
-            elif text.startswith("אירוע חדש:"):
-                graph_app.update_state(config, {"manager_raw_prompt": text})
-                for _ in graph_app.stream(None, config):
-                    pass
-                send_msg(chat_id, "קיבלתי! מתחיל לתכנן את האירוע...")
-            else:
-                graph_app.update_state(config, {"wakeup_reason": "message"})
-                for _ in graph_app.stream(None, config):
-                    pass
+                formatted_message = f"[{name}/{email}]: {text}"
+                
+                graph_app.invoke(
+                    {"incoming_participant_messages": [formatted_message], "wakeup_reason": "message"},
+                    config=config
+                )
                     
             return {"status": "ok"}
 

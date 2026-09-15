@@ -11,6 +11,7 @@ class AgentState(TypedDict):
     attendees: Optional[List[str]]
     wakeup_reason: Optional[str]
     manager_raw_prompt: Optional[str]
+    incoming_participant_messages: Optional[List[str]]
 
     # location ditales and location approving ditales
     suggested_folder_path: Optional[str]

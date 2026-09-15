@@ -142,6 +142,10 @@ def gather_updates(state: AgentState):
 
     new_files = check_drive_uploads.invoke(folder_url)
     incoming_messages = read_team_messages.invoke(event_id)
+    state_messages = state.get("incoming_participant_messages", [])
+    
+    if state_messages:
+        incoming_messages.extend(state_messages)
 
     system_msg_content = (
         f"System Update - Gathered Data:\n"
@@ -153,6 +157,7 @@ def gather_updates(state: AgentState):
 
     return {
         "uploaded_files": new_files,
+        "incoming_participant_messages": [],
         "messages": [SystemMessage(content=system_msg_content)]
     }
 
