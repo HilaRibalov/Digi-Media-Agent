@@ -14,7 +14,8 @@ from tools import (
     check_drive_uploads,
     read_team_messages,
     send_team_message,
-    notify_manager
+    notify_manager,
+    request_folder_approval
 )
 
 # Load environment configuration
@@ -87,6 +88,9 @@ def find_space_to_save(state: AgentState):
         suggested_path = str(content).strip()
 
     print(f"[Node] The LLM suggested the path: {suggested_path}")
+    
+    # Request manager approval for the suggested path
+    request_folder_approval(suggested_path)
 
     return {
         "suggested_folder_path": suggested_path,
