@@ -361,12 +361,65 @@ def escalate_to_human(state: AgentState):
     }
 
 
+def parse_manager_input(state: AgentState):
+    """Node: Parses the manager's raw text to extract event details and attendees."""
+    print("\n[Node] Executing 'parse_manager_input'...")
+    
+    raw_prompt = state.get("manager_raw_prompt", "")
+    system_instruction = (
+        "You are an assistant parsing event requests. "
+        "Extract the event name, the date, and a list of missing attendees (emails). "
+        "Return the output STRICTLY as a JSON object with keys: 'event_name', 'event_date', 'missing_attendees'."
+    )
+    
+    prompt_messages = [
+        SystemMessage(content=system_instruction),
+        HumanMessage(content=f"Request: {raw_prompt}")
+    ]
+    
+    response = llm.invoke(prompt_messages)
+    
+    content = response.content
+    if isinstance(content, list):
+        if len(content) > 0 and isinstance(content[0], dict):
+            raw_text = content[0].get("text", "")
+        else:
+            raw_text = str(content[0])
+    else:
+        raw_text = str(content)
+        
+    try:
+        clean_text = raw_text.replace("```json", "").replace("```", "").strip()
+        parsed = json.loads(clean_text)
+    except Exception as e:
+        print(f"[Error parsing JSON in parse_manager_input] {e}")
+        parsed = {}
+
+    event_name = parsed.get("event_name", "Unknown_Event")
+    event_date = parsed.get("event_date", "Unknown_Date")
+    missing = parsed.get("missing_attendees", [])
+    
+    # Generate a unique event_id if not present
+    event_id = state.get("event_id") or f"evt_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}"
+
+    return {
+        "event_id": event_id,
+        "event_name": event_name,
+        "event_date": event_date,
+        "missing_attendees": missing,
+        "manager_raw_prompt": None,
+        "messages": [SystemMessage(content=f"Parsed new event: {event_name} on {event_date} with {len(missing)} attendees.")]
+    }
+
+
 # ==========================================
 # Routers (Conditional Edges)
 # ==========================================
 
 def route_from_start(state: AgentState) -> str:
-    """Router 1: Determines entry node based on folder approval state."""
+    """Router 1: Determines entry node based on folder approval state or new prompt."""
+    if state.get("manager_raw_prompt"):
+        return "parse_manager_input"
     if state.get("folder_approval_status") == "approved":
         return "gather_updates"
     return "find_space_to_save"
@@ -409,6 +462,7 @@ def route_after_reply(state: AgentState) -> str:
 # ==========================================
 
 # Register nodes
+workflow.add_node("parse_manager_input", parse_manager_input)
 workflow.add_node("find_space_to_save", find_space_to_save)
 workflow.add_node("create_drive_space", create_drive_space)
 workflow.add_node("gather_updates", gather_updates)
@@ -419,6 +473,7 @@ workflow.add_node("escalate_to_human", escalate_to_human)
 
 # Connect graph edges and conditional routing
 workflow.add_conditional_edges(START, route_from_start)
+workflow.add_edge("parse_manager_input", "find_space_to_save")
 workflow.add_conditional_edges("find_space_to_save", route_after_path_suggestion)
 
 workflow.add_conditional_edges(

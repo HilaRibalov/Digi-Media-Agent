@@ -10,6 +10,7 @@ class AgentState(TypedDict):
     event_date: Optional[str]
     attendees: Optional[List[str]]
     wakeup_reason: Optional[str]
+    manager_raw_prompt: Optional[str]
 
     # location ditales and location approving ditales
     suggested_folder_path: Optional[str]

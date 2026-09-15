@@ -69,6 +69,15 @@ async def telegram_webhook(request: Request):
                 graph_app.update_state(config, {"user_feedback": text})
                 for _ in graph_app.stream(Command(resume=True), config):
                     pass
+            elif text.startswith("אירוע חדש:"):
+                graph_app.update_state(config, {"manager_raw_prompt": text})
+                for _ in graph_app.stream(None, config):
+                    pass
+                send_msg(chat_id, "קיבלתי! מתחיל לתכנן את האירוע...")
+            else:
+                graph_app.update_state(config, {"wakeup_reason": "message"})
+                for _ in graph_app.stream(None, config):
+                    pass
                     
             return {"status": "ok"}
 
