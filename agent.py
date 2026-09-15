@@ -15,7 +15,8 @@ from tools import (
     read_team_messages,
     send_team_message,
     notify_manager,
-    request_folder_approval
+    request_folder_approval,
+    get_drive_categories
 )
 
 # Load environment configuration
@@ -52,23 +53,26 @@ workflow = StateGraph(AgentState)
 # ==========================================
 
 def find_space_to_save(state: AgentState):
-    """Node: Analyzes event details and suggests a Google Drive folder path."""
+    """Node: Analyzes event details and suggests a Google Drive folder category."""
     print("\n[Node] Executing 'find_space_to_save'...")
 
     event_name = state.get("event_name", "Unknown_Event")
     event_date = state.get("event_date", "Unknown_Date")
     user_feedback = state.get("user_feedback")
 
+    categories = get_drive_categories.invoke("11Vch-e-CAxF0uckJGshdUvOrayahP11P")
+
     system_instruction = (
         "You are an assistant organizing Google Drive folders. "
-        "Suggest a logical folder path based on the event name and date. "
-        "Use the exact format: הפרויקטים שלי/הלל דיגיטל/בן גוריון/תשפז/אירועים/Event_Name - Event_Date\n"
-        "Do NOT include a separate year folder (like /2026/).\n"
-        "Return ONLY the path string, without markdown or extra text."
+        "Choose the most appropriate category for the new event from the available categories. "
+        "Generate a folder name in the exact format: 'Event_Name - Event_Date'. "
+        "Do NOT include a separate year folder.\n"
+        f"Available categories: {categories}\n"
+        "Return ONLY a valid JSON object with keys: 'chosen_category_name', 'chosen_category_id', and 'folder_name'."
     )
 
     if user_feedback:
-        system_instruction += f"\n\nCRITICAL: The manager rejected the previous path with this feedback: '{user_feedback}'. Adjust the path accordingly."
+        system_instruction += f"\n\nCRITICAL: The manager rejected the previous suggestion with this feedback: '{user_feedback}'. Adjust accordingly."
 
     prompt_messages = [
         SystemMessage(content=system_instruction),
@@ -77,26 +81,38 @@ def find_space_to_save(state: AgentState):
 
     response = llm.invoke(prompt_messages)
 
-    # Safe extraction of text content regardless of response format
     content = response.content
     if isinstance(content, list):
         if len(content) > 0 and isinstance(content[0], dict):
-            suggested_path = content[0].get("text", "").strip()
+            raw_text = content[0].get("text", "")
         else:
-            suggested_path = str(content[0]).strip()
+            raw_text = str(content[0])
     else:
-        suggested_path = str(content).strip()
+        raw_text = str(content)
 
-    print(f"[Node] The LLM suggested the path: {suggested_path}")
+    try:
+        clean_text = raw_text.replace("```json", "").replace("```", "").strip()
+        parsed = json.loads(clean_text)
+    except Exception as e:
+        print(f"[Error parsing JSON in find_space_to_save] {e}")
+        parsed = {}
+
+    category_name = parsed.get("chosen_category_name", "Unknown Category")
+    category_id = parsed.get("chosen_category_id", "mock_id_1")
+    folder_name = parsed.get("folder_name", f"{event_name} - {event_date}")
+
+    print(f"[Node] The LLM suggested folder '{folder_name}' in category '{category_name}'")
     
-    # Request manager approval for the suggested path
-    request_folder_approval(suggested_path)
+    # Request manager approval
+    request_folder_approval(category_name, folder_name)
 
     return {
-        "suggested_folder_path": suggested_path,
+        "suggested_folder_name": folder_name,
+        "suggested_category_id": category_id,
+        "suggested_category_name": category_name,
         "folder_approval_status": "pending",
-        "user_feedback": "",  # Clear feedback post-consumption to prevent recursive loops
-        "messages": [SystemMessage(content=f"Suggested folder path: {suggested_path}")]
+        "user_feedback": "",
+        "messages": [SystemMessage(content=f"Suggested folder: '{folder_name}' in '{category_name}'")]
     }
 
 
@@ -104,11 +120,12 @@ def create_drive_space(state: AgentState):
     """Node: Creates the actual folder in Google Drive with error handling."""
     print("\n[Node] Executing 'create_drive_space'...")
 
-    final_path = state.get("approved_folder_path") or state.get("suggested_folder_path")
+    folder_name = state.get("suggested_folder_name", "Unknown_Folder")
+    category_id = state.get("suggested_category_id", "Unknown_Category")
 
     try:
         # Execute Google Drive folder provisioning
-        folder_url = create_drive_folder.invoke(final_path)
+        folder_url = create_drive_folder.invoke({"folder_name": folder_name, "parent_id": category_id})
         print(f"[Node] Folder created successfully! URL: {folder_url}")
 
         return {
@@ -119,12 +136,12 @@ def create_drive_space(state: AgentState):
 
     except Exception as e:
         # Handle third-party API failures and notify administration
-        error_msg = f"Failed to create Google Drive folder at path '{final_path}': {str(e)}"
+        error_msg = f"Failed to create Google Drive folder '{folder_name}' in category '{category_id}': {str(e)}"
         print(f"[Node Error] {error_msg}")
 
         notify_manager.invoke({
             "subject": "שגיאת מערכת: כשל ביצירת תיקיית Drive",
-            "message": f"הסוכן נתקל בשגיאה ביצירת התיקייה בנתיב: {final_path}.\nפירוט השגיאה: {str(e)}\nהתהליך הופסק זמנית."
+            "message": f"הסוכן נתקל בשגיאה ביצירת התיקייה בנתיב: {folder_name}.\nפירוט השגיאה: {str(e)}\nהתהליך הופסק זמנית."
         })
 
         return {

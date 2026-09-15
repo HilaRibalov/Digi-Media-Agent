@@ -3,6 +3,13 @@ import requests
 from langchain_core.tools import tool
 from user_directory import get_chat_id_by_email, get_manager_chat_id
 
+import google.auth
+from googleapiclient.discovery import build
+
+def _get_drive_service():
+    credentials, project = google.auth.default(scopes=['https://www.googleapis.com/auth/drive'])
+    return build('drive', 'v3', credentials=credentials)
+
 # Internal helper function to dispatch messages via Telegram Bot API
 def _send_telegram_message(chat_id: str, text: str) -> bool:
     token = os.getenv("TELEGRAM_BOT_TOKEN")
@@ -24,31 +31,78 @@ def _send_telegram_message(chat_id: str, text: str) -> bool:
         print(f"[Telegram API Error] Failed to send message: {e}")
         return False
 
+@tool
+def get_drive_categories(main_parent_id: str) -> dict:
+    """Gets available folder categories in the parent drive folder."""
+    env = os.getenv("ENVIRONMENT", "development").lower()
+    
+    if env != "production":
+        return {"אירועים כלליים": "mock_id_1", "תוכניות": "mock_id_2"}
+        
+    try:
+        service = _get_drive_service()
+        query = f"'{main_parent_id}' in parents and trashed=false and mimeType='application/vnd.google-apps.folder'"
+        results = service.files().list(q=query, fields="nextPageToken, files(id, name)").execute()
+        items = results.get('files', [])
+        return {item['name']: item['id'] for item in items}
+    except Exception as e:
+        print(f"[Drive API Error] {e}")
+        return {}
 
-# Mocking the tools activity for the local simulation environment
 
 @tool
-def create_drive_folder(folder_path: str) -> str:
-    """Creates a new Google Drive folder at the specified path and returns the folder URL."""
-    print(f"\n[Tool Execution] Creating Drive folder at path: {folder_path}...")
-    return f"https://drive.google.com/drive/folders/mock_folder_{folder_path.replace('/', '_')}"
-
+def create_drive_folder(folder_name: str, parent_id: str) -> str:
+    """Creates a new Google Drive folder and returns the folder URL."""
+    env = os.getenv("ENVIRONMENT", "development").lower()
+    
+    if env != "production":
+        print(f"\n[Tool Execution] Creating Drive folder '{folder_name}' in '{parent_id}'...")
+        return f"https://drive.google.com/drive/folders/mock_folder_{folder_name.replace(' ', '_')}"
+        
+    try:
+        service = _get_drive_service()
+        file_metadata = {
+            'name': folder_name,
+            'parents': [parent_id],
+            'mimeType': 'application/vnd.google-apps.folder'
+        }
+        file = service.files().create(body=file_metadata, fields='id, webViewLink').execute()
+        return file.get('webViewLink')
+    except Exception as e:
+        print(f"[Drive API Error] {e}")
+        raise
 
 @tool
-def check_drive_uploads(folder_url: str) -> list:
+def check_drive_uploads(folder_url_or_id: str) -> list:
     """Checks for newly uploaded files in the Drive folder."""
-    # Only prompt for file uploads if explicitly requested via the simulation menu
-    if os.getenv("MOCK_PROMPT_TYPE") != "upload":
+    env = os.getenv("ENVIRONMENT", "development").lower()
+    
+    if env != "production":
+        # Only prompt for file uploads if explicitly requested via the simulation menu
+        if os.getenv("MOCK_PROMPT_TYPE") != "upload":
+            return []
+        print("\n--- [SYSTEM MOCK: DRIVE] ---")
+        user_input = input("Simulate a file upload (e.g. 'yossi@example.com'), or press Enter for no files: ")
+        if user_input.strip():
+            return [f"photo_from_{user_input.strip()}.jpg"]
         return []
 
-    print("\n--- [SYSTEM MOCK: DRIVE] ---")
-    user_input = input("Simulate a file upload (e.g. 'yossi@example.com'), or press Enter for no files: ")
-
-    if user_input.strip():
-        # Return a mock file list showing the uploader's identity
-        return [f"photo_from_{user_input.strip()}.jpg"]
-    return []
-
+    try:
+        folder_id = folder_url_or_id.split("/")[-1] if "/" in folder_url_or_id else folder_url_or_id
+        service = _get_drive_service()
+        query = f"'{folder_id}' in parents and trashed=false"
+        results = service.files().list(q=query, fields="files(lastModifyingUser)").execute()
+        items = results.get('files', [])
+        uploaders = set()
+        for item in items:
+            user = item.get('lastModifyingUser', {})
+            email = user.get('emailAddress')
+            if email:
+                uploaders.add(email)
+        return list(uploaders)
+    except Exception as e:
+        print(f"[Drive API Error] {e}")
+        return []
 
 @tool
 def read_team_messages(event_id: str) -> list:
@@ -69,7 +123,6 @@ def read_team_messages(event_id: str) -> list:
     if user_msg.strip():
         return [user_msg]
     return []
-
 
 @tool
 def send_team_message(recipient: str, message: str) -> str:
@@ -95,7 +148,6 @@ def send_team_message(recipient: str, message: str) -> str:
         print(f"\n[Tool Execution] Sending message to {recipient}:\n{message}")
         return f"Success: Message sent to {recipient}"
 
-
 @tool
 def notify_manager(subject: str, message: str) -> str:
     """Sends a direct notification to the manager.
@@ -120,9 +172,11 @@ def notify_manager(subject: str, message: str) -> str:
         print(f"\n[Tool Execution] Manager Notification! Subject: {subject}\nMessage: {message}")
         return "Success: Manager notified"
 
-def request_folder_approval(folder_path: str) -> None:
+def request_folder_approval(category_name: str, folder_name: str) -> None:
     """Sends a Telegram message to the manager with an Inline Keyboard for folder approval."""
     env = os.getenv("ENVIRONMENT", "development").lower()
+    
+    msg_text = f"אני מציע ליצור את התיקייה '{folder_name}' תחת הקטגוריה '{category_name}'"
     
     if env == "production":
         manager_chat_id = get_manager_chat_id()
@@ -134,7 +188,7 @@ def request_folder_approval(folder_path: str) -> None:
         url = f"https://api.telegram.org/bot{token}/sendMessage"
         payload = {
             "chat_id": manager_chat_id,
-            "text": f"אנא אשרי את נתיב התיקייה הבא:\n{folder_path}",
+            "text": msg_text,
             "reply_markup": {
                 "inline_keyboard": [
                     [
@@ -151,4 +205,4 @@ def request_folder_approval(folder_path: str) -> None:
         except requests.RequestException as e:
             print(f"[Telegram API Error] Failed to send approval request: {e}")
     else:
-        print(f"\n[Tool Execution] Manager Approval Request for path: {folder_path}")
+        print(f"\n[Tool Execution] Manager Approval Request: {msg_text}")

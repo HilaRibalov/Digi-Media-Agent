@@ -14,8 +14,9 @@ class AgentState(TypedDict):
     incoming_participant_messages: Optional[List[str]]
 
     # location ditales and location approving ditales
-    suggested_folder_path: Optional[str]
-    approved_folder_path: Optional[str]
+    suggested_folder_name: Optional[str]
+    suggested_category_id: Optional[str]
+    suggested_category_name: Optional[str]
     folder_url: Optional[str]
     folder_approval_status: Optional[str]  
     user_feedback: Optional[str]

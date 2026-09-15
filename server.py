@@ -41,10 +41,7 @@ async def telegram_webhook(request: Request):
             answer_callback(cb_id)
             
             if data == "approve_folder":
-                state = graph_app.get_state(config)
-                current_path = state.values.get("suggested_folder_path")
-                
-                graph_app.update_state(config, {"approved_folder_path": current_path, "user_feedback": ""})
+                graph_app.update_state(config, {"user_feedback": ""})
                 for _ in graph_app.stream(Command(resume=True), config):
                     pass
                 send_msg(chat_id, "התיקייה אושרה בהצלחה! ממשיך ביצירתה.")

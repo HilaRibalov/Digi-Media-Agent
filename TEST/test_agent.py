@@ -49,7 +49,6 @@ class TestMediaCollectionAgent(unittest.TestCase):
                 app.update_state(config, {"user_feedback": feedback})
             else:
                 app.update_state(config, {
-                    "approved_folder_path": state.values.get("suggested_folder_path"),
                     "user_feedback": ""
                 })
 
@@ -98,8 +97,8 @@ class TestMediaCollectionAgent(unittest.TestCase):
         """
         feedbacks = ["Change to English letters", ""]
         final_state = self.run_simulation(self.base_state, manager_feedbacks=feedbacks)
-        self.assertIn("approved_folder_path", final_state)
-        self.assertNotEqual(final_state["approved_folder_path"], "")
+        self.assertIn("suggested_folder_name", final_state)
+        self.assertNotEqual(final_state["suggested_folder_name"], "")
 
     def test_03_manager_rejects_path_twice(self):
         """
@@ -189,7 +188,7 @@ class TestMediaCollectionAgent(unittest.TestCase):
         state = self.base_state.copy()
         state["event_name"] = "Event @#$%^&*"
         final_state = self.run_simulation(state)
-        self.assertIn("approved_folder_path", final_state)
+        self.assertIn("suggested_folder_name", final_state)
 
     def test_11_unusual_date_format(self):
         """
@@ -199,7 +198,7 @@ class TestMediaCollectionAgent(unittest.TestCase):
         state = self.base_state.copy()
         state["event_date"] = "Late October sometime"
         final_state = self.run_simulation(state)
-        self.assertIn("approved_folder_path", final_state)
+        self.assertIn("suggested_folder_name", final_state)
 
     def test_12_mixed_behavior_one_uploads_one_escalates(self):
         """
@@ -251,7 +250,7 @@ class TestMediaCollectionAgent(unittest.TestCase):
             config = {"configurable": {"thread_id": uuid.uuid4().hex}}
             for _ in app.stream(self.base_state, config): pass
 
-            app.update_state(config, {"approved_folder_path": "test_path", "user_feedback": ""})
+            app.update_state(config, {"user_feedback": ""})
             for _ in app.stream(Command(resume=True), config): pass
 
             final_state = app.get_state(config).values
