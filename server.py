@@ -62,7 +62,11 @@ async def telegram_webhook(request: Request):
             text = msg.get("text", "")
             
             if chat_id == str(manager_chat_id):
-                if manager_state.get("awaiting_feedback") and text:
+                if text.strip() == "תזכורת יומית":
+                    send_msg(chat_id, "יוזם בדיקת חוסרים ושליחת תזכורות לכל מי שטרם העלה תמונות...")
+                    graph_app.invoke({"wakeup_reason": "daily_cron"}, config=config)
+                    return {"status": "ok"}
+                elif manager_state.get("awaiting_feedback") and text:
                     manager_state["awaiting_feedback"] = False
                     graph_app.update_state(config, {"user_feedback": text})
                     for _ in graph_app.stream(Command(resume=True), config):
