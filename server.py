@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 import os
 import requests
 import uuid
+import json
 from langgraph.types import Command
 from agent import app as graph_app
 from user_directory import get_manager_chat_id, get_user_info_by_chat_id
@@ -10,6 +11,9 @@ app = FastAPI(title="Digi-Media-Agent Webhook Server")
 
 # In-memory flag to track if we are waiting for feedback
 manager_state = {"awaiting_feedback": False}
+
+# Onboarding state for new users
+ONBOARDING_STATE = {}
 
 ACTIVE_THREAD_ID = "default_1"
 
@@ -84,16 +88,39 @@ async def telegram_webhook(request: Request):
             if text:
                 user_info = get_user_info_by_chat_id(chat_id)
                 if user_info:
+                    # User is known, pass to LangGraph
                     email, name = user_info
+                    formatted_message = f"[{name}/{email}]: {text}"
+                    graph_app.invoke(
+                        {"incoming_participant_messages": [formatted_message], "wakeup_reason": "message"},
+                        config=config
+                    )
                 else:
-                    email, name = "Unknown", "Unknown Participant"
-                
-                formatted_message = f"[{name}/{email}]: {text}"
-                
-                graph_app.invoke(
-                    {"incoming_participant_messages": [formatted_message], "wakeup_reason": "message"},
-                    config=config
-                )
+                    # User is unknown, handle onboarding
+                    if chat_id not in ONBOARDING_STATE:
+                        ONBOARDING_STATE[chat_id] = {"state": "WAITING_FOR_NAME"}
+                        send_msg(chat_id, "ברוך הבא! כדי שנוכל לקשר את התמונות שתעלה, איך קוראים לך?")
+                    elif ONBOARDING_STATE[chat_id]["state"] == "WAITING_FOR_NAME":
+                        ONBOARDING_STATE[chat_id]["name"] = text.strip()
+                        ONBOARDING_STATE[chat_id]["state"] = "WAITING_FOR_EMAIL"
+                        send_msg(chat_id, "נעים להכיר! מה כתובת המייל שלך (זו שמוגדרת בגוגל דרייב)?")
+                    elif ONBOARDING_STATE[chat_id]["state"] == "WAITING_FOR_EMAIL":
+                        email = text.strip().lower()
+                        name = ONBOARDING_STATE[chat_id]["name"]
+                        
+                        try:
+                            with open("users.json", "r", encoding="utf-8") as f:
+                                users = json.load(f)
+                        except FileNotFoundError:
+                            users = {}
+                        
+                        users[email] = {"chat_id": int(chat_id), "name": name}
+                        
+                        with open("users.json", "w", encoding="utf-8") as f:
+                            json.dump(users, f, ensure_ascii=False, indent=4)
+                            
+                        del ONBOARDING_STATE[chat_id]
+                        send_msg(chat_id, "מעולה, נרשמת בהצלחה!")
                     
             return {"status": "ok"}
 
