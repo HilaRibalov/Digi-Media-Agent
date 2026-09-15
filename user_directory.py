@@ -4,6 +4,7 @@ from typing import Optional, Tuple
 _manager_id = os.getenv("MANAGER_CHAT_ID")
 
 USER_DIRECTORY = {
+    "hila.ribalov@gmail.com": {"chat_id": 8621732852, "name": "הילה"},
     "dani@example.com": {"chat_id": 8621732852, "name": "דני"},
     "yossi@example.com": {"chat_id": 8621732852, "name": "יוסי"} #todo swich to ilays num
 }
