@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 import os
 import requests
+import uuid
 from langgraph.types import Command
 from agent import app as graph_app
 from user_directory import get_manager_chat_id, get_user_info_by_chat_id
@@ -9,6 +10,8 @@ app = FastAPI(title="Digi-Media-Agent Webhook Server")
 
 # In-memory flag to track if we are waiting for feedback
 manager_state = {"awaiting_feedback": False}
+
+ACTIVE_THREAD_ID = "default_1"
 
 def send_msg(chat_id, text):
     token = os.getenv("TELEGRAM_BOT_TOKEN")
@@ -22,13 +25,14 @@ def answer_callback(callback_query_id):
 
 @app.post("/webhook")
 async def telegram_webhook(request: Request):
+    global ACTIVE_THREAD_ID
     try:
         update = await request.json()
         print("Received update from Telegram:")
         print(update)
         
         manager_chat_id = get_manager_chat_id()
-        config = {"configurable": {"thread_id": "demo_event_1"}}
+        config = {"configurable": {"thread_id": ACTIVE_THREAD_ID}}
         
         if "callback_query" in update:
             cb = update["callback_query"]
@@ -65,6 +69,8 @@ async def telegram_webhook(request: Request):
                         pass
                     return {"status": "ok"}
                 elif text.startswith("אירוע חדש:"):
+                    ACTIVE_THREAD_ID = str(uuid.uuid4())
+                    config = {"configurable": {"thread_id": ACTIVE_THREAD_ID}}
                     graph_app.update_state(config, {"manager_raw_prompt": text})
                     for _ in graph_app.stream(None, config):
                         pass
