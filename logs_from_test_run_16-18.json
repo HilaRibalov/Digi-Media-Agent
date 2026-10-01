@@ -1,0 +1,1107 @@
+[
+  {
+    "insertId": "6aace464000676ecf2d56981",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-18T07:12:36.642525052Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:10510 - \"POST /webhook HTTP/1.1\" 200 OK",
+    "timestamp": "2026-09-18T07:12:36.423660Z"
+  },
+  {
+    "insertId": "6aace463000ed4a95acd34fb",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-18T07:12:35.977369460Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "{'update_id': 583195326, 'callback_query': {'id': '136572490577686454', 'from': {'id': 8621732852, 'is_bot': False, 'first_name': 'Hila', 'last_name': 'Ribalov', 'language_code': 'en'}, 'message': {'message_id': 138, 'from': {'id': 8413894439, 'is_bot': True, 'first_name': 'דיגי הלל', 'username': 'Digital_collector_hillel_bot'}, 'chat': {'id': 8621732852, 'first_name': 'Hila', 'last_name': 'Ribalov', 'type': 'private'}, 'date': 1789674721, 'text': \"אני מציע ליצור את התיקייה 'בדיקה - 16-17.9' תחת הקטגוריה 'אירועים'\", 'reply_markup': {'inline_keyboard': [[{'text': 'אשרי תיקייה', 'callback_data': 'approve_folder'}, {'text': 'דחי והזיני תיקון', 'callback_data': 'reject_folder'}]]}}, 'chat_instance': '7001583392635709288', 'data': 'approve_folder'}}",
+    "timestamp": "2026-09-18T07:12:35.971945Z"
+  },
+  {
+    "insertId": "6aace463000ed48c762b91d4",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-18T07:12:35.977369460Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "Received update from Telegram:",
+    "timestamp": "2026-09-18T07:12:35.971916Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.454982669s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "91.108.5.71",
+      "requestMethod": "POST",
+      "requestSize": "1385",
+      "requestUrl": "https://digi-media-agent-388045277937.me-west1.run.app/webhook",
+      "responseSize": "115",
+      "serverIp": "34.143.79.2",
+      "status": 200
+    },
+    "insertId": "6aace46400067a2555be11d0",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-09-18T07:12:36.432752082Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "5998d4685d788511",
+    "timestamp": "2026-09-18T07:12:35.959339Z",
+    "trace": "projects/digi-media-agent/traces/e25c3bca5f50a6221a8078fbd191627e",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6aac4904000d52679c418c49",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T20:09:41.014765078Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:39386 - \"POST /webhook HTTP/1.1\" 200 OK",
+    "timestamp": "2026-09-17T20:09:40.873063Z"
+  },
+  {
+    "insertId": "6aac4904000531ff43ef442d",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T20:09:40.347880965Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "{'update_id': 583195325, 'callback_query': {'id': '136572487505290348', 'from': {'id': 8621732852, 'is_bot': False, 'first_name': 'Hila', 'last_name': 'Ribalov', 'language_code': 'en'}, 'message': {'message_id': 138, 'from': {'id': 8413894439, 'is_bot': True, 'first_name': 'דיגי הלל', 'username': 'Digital_collector_hillel_bot'}, 'chat': {'id': 8621732852, 'first_name': 'Hila', 'last_name': 'Ribalov', 'type': 'private'}, 'date': 1789674721, 'text': \"אני מציע ליצור את התיקייה 'בדיקה - 16-17.9' תחת הקטגוריה 'אירועים'\", 'reply_markup': {'inline_keyboard': [[{'text': 'אשרי תיקייה', 'callback_data': 'approve_folder'}, {'text': 'דחי והזיני תיקון', 'callback_data': 'reject_folder'}]]}}, 'chat_instance': '7001583392635709288', 'data': 'approve_folder'}}",
+    "timestamp": "2026-09-17T20:09:40.340479Z"
+  },
+  {
+    "insertId": "6aac4904000531e00f5b35eb",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T20:09:40.347880965Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "Received update from Telegram:",
+    "timestamp": "2026-09-17T20:09:40.340448Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.535597221s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "91.108.5.71",
+      "requestMethod": "POST",
+      "requestSize": "1385",
+      "requestUrl": "https://digi-media-agent-388045277937.me-west1.run.app/webhook",
+      "responseSize": "115",
+      "serverIp": "34.143.74.2",
+      "status": 200
+    },
+    "insertId": "6aac4904000d56122ff0e110",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-09-17T20:09:40.878271070Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "cc92a45b209ab3cb",
+    "timestamp": "2026-09-17T20:09:40.329734Z",
+    "trace": "projects/digi-media-agent/traces/c10f1e3b68231a424d40875036ae84b5",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6aac44e90007b77bf2b0d462",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:52:09.710982484Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:12074 - \"POST /webhook HTTP/1.1\" 200 OK",
+    "timestamp": "2026-09-17T19:52:09.505723Z"
+  },
+  {
+    "insertId": "6aac44e9000362d9ca72bbb1",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:52:09.379927427Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "[Node] Messaging summary: ['Messaged hila.ribalov@gmail.com']",
+    "timestamp": "2026-09-17T19:52:09.221913Z"
+  },
+  {
+    "insertId": "6aac44e9000362cc0220344f",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:52:09.379927427Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "[Production Tool Error] No Telegram chat ID found for recipient: hila.ribalov@gmail.com",
+    "timestamp": "2026-09-17T19:52:09.221900Z"
+  },
+  {
+    "insertId": "6aac44e6000961982d1548b0",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:52:06.717570879Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "[Node] Executing 'send_reminders'...",
+    "timestamp": "2026-09-17T19:52:06.614808Z"
+  },
+  {
+    "insertId": "6aac44e6000959d37e6fd391",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:52:06.717570879Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "[Node] Folder created successfully! URL: https://drive.google.com/drive/folders/15tonQIRvW1kmpfE97j9ELHCySyBjIVZU",
+    "timestamp": "2026-09-17T19:52:06.612819Z"
+  },
+  {
+    "insertId": "6aac44e5000a73d3592ff276",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-09-17T19:52:05.888447159Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "httplib2 transport does not support per-request timeout. Set the timeout when constructing the httplib2.Http instance.",
+    "timestamp": "2026-09-17T19:52:05.685011Z"
+  },
+  {
+    "insertId": "6aac44e5000a6f2e6f2d8fc9",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-09-17T19:52:05.888447159Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "httplib2 transport does not support per-request timeout. Set the timeout when constructing the httplib2.Http instance.",
+    "timestamp": "2026-09-17T19:52:05.683822Z"
+  },
+  {
+    "insertId": "6aac44e5000a30072ad7b595",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:52:05.715463870Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "[Node] Executing 'create_drive_space'...",
+    "timestamp": "2026-09-17T19:52:05.667655Z"
+  },
+  {
+    "insertId": "6aac44e500067beaf4ffb1eb",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:52:05.715463870Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "{'update_id': 583195324, 'callback_query': {'id': '136572488837977723', 'from': {'id': 8621732852, 'is_bot': False, 'first_name': 'Hila', 'last_name': 'Ribalov', 'language_code': 'en'}, 'message': {'message_id': 138, 'from': {'id': 8413894439, 'is_bot': True, 'first_name': 'דיגי הלל', 'username': 'Digital_collector_hillel_bot'}, 'chat': {'id': 8621732852, 'first_name': 'Hila', 'last_name': 'Ribalov', 'type': 'private'}, 'date': 1789674721, 'text': \"אני מציע ליצור את התיקייה 'בדיקה - 16-17.9' תחת הקטגוריה 'אירועים'\", 'reply_markup': {'inline_keyboard': [[{'text': 'אשרי תיקייה', 'callback_data': 'approve_folder'}, {'text': 'דחי והזיני תיקון', 'callback_data': 'reject_folder'}]]}}, 'chat_instance': '7001583392635709288', 'data': 'approve_folder'}}",
+    "timestamp": "2026-09-17T19:52:05.424938Z"
+  },
+  {
+    "insertId": "6aac44e500067bd5642e975b",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:52:05.715463870Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "Received update from Telegram:",
+    "timestamp": "2026-09-17T19:52:05.424917Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "4.083744381s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "91.108.5.71",
+      "requestMethod": "POST",
+      "requestSize": "1385",
+      "requestUrl": "https://digi-media-agent-388045277937.me-west1.run.app/webhook",
+      "responseSize": "115",
+      "serverIp": "34.143.73.2",
+      "status": 200
+    },
+    "insertId": "6aac44e90007bb08ac7a49cd",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-09-17T19:52:09.511189908Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "3d4248ca3e742fa5",
+    "timestamp": "2026-09-17T19:52:05.420396Z",
+    "trace": "projects/digi-media-agent/traces/f289c0222e0c46d9eeb0369151386ea6",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6aac44e1000cd6f75aee492f",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:52:02.057708193Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:62634 - \"POST /webhook HTTP/1.1\" 200 OK",
+    "timestamp": "2026-09-17T19:52:01.841463Z"
+  },
+  {
+    "insertId": "6aac44e10008ae80d5ba5aea",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:52:01.717999287Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "[Production Tool] Sent folder approval request to manager.",
+    "timestamp": "2026-09-17T19:52:01.568960Z"
+  },
+  {
+    "insertId": "6aac44e10004f64ac6132f1b",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:52:01.389726962Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "[Node] The LLM suggested folder 'בדיקה - 16-17.9' in category 'אירועים'",
+    "timestamp": "2026-09-17T19:52:01.325194Z"
+  },
+  {
+    "insertId": "6aac44de000d9585461f55e0",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-09-17T19:51:59.227222406Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "httplib2 transport does not support per-request timeout. Set the timeout when constructing the httplib2.Http instance.",
+    "timestamp": "2026-09-17T19:51:58.890245Z"
+  },
+  {
+    "insertId": "6aac44de000d90b23125a6a7",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-09-17T19:51:58.895810575Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "httplib2 transport does not support per-request timeout. Set the timeout when constructing the httplib2.Http instance.",
+    "timestamp": "2026-09-17T19:51:58.889010Z"
+  },
+  {
+    "insertId": "6aac44de000d1c7240ea5319",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:51:59.054750075Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "[Node] Executing 'find_space_to_save'...",
+    "timestamp": "2026-09-17T19:51:58.859250Z"
+  },
+  {
+    "insertId": "6aac44db0005ee0913c21f3e",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:51:55.727443514Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "[Node] Executing 'parse_manager_input'...",
+    "timestamp": "2026-09-17T19:51:55.388617Z"
+  },
+  {
+    "insertId": "6aac44db0005e4e425450aa0",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:51:55.393570780Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "{'update_id': 583195323, 'message': {'message_id': 137, 'from': {'id': 8621732852, 'is_bot': False, 'first_name': 'Hila', 'last_name': 'Ribalov', 'language_code': 'en'}, 'chat': {'id': 8621732852, 'first_name': 'Hila', 'last_name': 'Ribalov', 'type': 'private'}, 'date': 1789674715, 'text': 'אירוע חדש: בדיקה- 16-17.9 משתתפים: hila.ribalov@gmail.com', 'entities': [{'offset': 35, 'length': 22, 'type': 'email'}]}}",
+    "timestamp": "2026-09-17T19:51:55.386276Z"
+  },
+  {
+    "insertId": "6aac44db0005e4cd48fecce0",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:51:55.393570780Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "Received update from Telegram:",
+    "timestamp": "2026-09-17T19:51:55.386253Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "6.462605351s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "91.108.5.71",
+      "requestMethod": "POST",
+      "requestSize": "788",
+      "requestUrl": "https://digi-media-agent-388045277937.me-west1.run.app/webhook",
+      "responseSize": "115",
+      "serverIp": "34.143.73.2",
+      "status": 200
+    },
+    "insertId": "6aac44e1000cecd6e24d85b5",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-09-17T19:52:01.854719691Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "4fb4fc751a84ba1e",
+    "timestamp": "2026-09-17T19:51:55.376155Z",
+    "trace": "projects/digi-media-agent/traces/269a12a65c291bde5cee321040549851",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6aac4437000ac8b40e021799",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:49:11.816715546Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:50712 - \"POST /webhook HTTP/1.1\" 200 OK",
+    "timestamp": "2026-09-17T19:49:11.706740Z"
+  },
+  {
+    "insertId": "6aac443700023433a74a8325",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:49:11.151343666Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "{'update_id': 583195322, 'callback_query': {'id': '136572488701344320', 'from': {'id': 8621732852, 'is_bot': False, 'first_name': 'Hila', 'last_name': 'Ribalov', 'language_code': 'en'}, 'message': {'message_id': 125, 'from': {'id': 8413894439, 'is_bot': True, 'first_name': 'דיגי הלל', 'username': 'Digital_collector_hillel_bot'}, 'chat': {'id': 8621732852, 'first_name': 'Hila', 'last_name': 'Ribalov', 'type': 'private'}, 'date': 1789665043, 'text': \"אני מציע ליצור את התיקייה 'הכנה למשלחת ביקור משפחתי - 16-17.9' תחת הקטגוריה 'אירועים'\", 'reply_markup': {'inline_keyboard': [[{'text': 'אשרי תיקייה', 'callback_data': 'approve_folder'}, {'text': 'דחי והזיני תיקון', 'callback_data': 'reject_folder'}]]}}, 'chat_instance': '7001583392635709288', 'data': 'approve_folder'}}",
+    "timestamp": "2026-09-17T19:49:11.144435Z"
+  },
+  {
+    "insertId": "6aac4437000234000daa3d5e",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T19:49:11.151343666Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "Received update from Telegram:",
+    "timestamp": "2026-09-17T19:49:11.144384Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.565803928s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "91.108.5.71",
+      "requestMethod": "POST",
+      "requestSize": "1484",
+      "requestUrl": "https://digi-media-agent-388045277937.me-west1.run.app/webhook",
+      "responseSize": "115",
+      "serverIp": "34.143.73.2",
+      "status": 200
+    },
+    "insertId": "6aac4437000acbb218a2aa93",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-09-17T19:49:11.716954346Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "b32a5e1b82ec2560",
+    "timestamp": "2026-09-17T19:49:11.133028Z",
+    "trace": "projects/digi-media-agent/traces/1c0b0f7888ac5fc18b4372a48a6be8fa",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6aac2198000bedecef35e142",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T17:21:29.016393377Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:63480 - \"POST /webhook HTTP/1.1\" 200 OK",
+    "timestamp": "2026-09-17T17:21:28.781804Z"
+  },
+  {
+    "insertId": "6aac2198000546b21eeb2b99",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T17:21:28.354575597Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "{'update_id': 583195321, 'callback_query': {'id': '136572487968648946', 'from': {'id': 8621732852, 'is_bot': False, 'first_name': 'Hila', 'last_name': 'Ribalov', 'language_code': 'en'}, 'message': {'message_id': 125, 'from': {'id': 8413894439, 'is_bot': True, 'first_name': 'דיגי הלל', 'username': 'Digital_collector_hillel_bot'}, 'chat': {'id': 8621732852, 'first_name': 'Hila', 'last_name': 'Ribalov', 'type': 'private'}, 'date': 1789665043, 'text': \"אני מציע ליצור את התיקייה 'הכנה למשלחת ביקור משפחתי - 16-17.9' תחת הקטגוריה 'אירועים'\", 'reply_markup': {'inline_keyboard': [[{'text': 'אשרי תיקייה', 'callback_data': 'approve_folder'}, {'text': 'דחי והזיני תיקון', 'callback_data': 'reject_folder'}]]}}, 'chat_instance': '7001583392635709288', 'data': 'approve_folder'}}",
+    "timestamp": "2026-09-17T17:21:28.345778Z"
+  },
+  {
+    "insertId": "6aac219800054693c40ff6ff",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T17:21:28.354575597Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "Received update from Telegram:",
+    "timestamp": "2026-09-17T17:21:28.345747Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.438415447s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "91.108.5.71",
+      "requestMethod": "POST",
+      "requestSize": "1485",
+      "requestUrl": "https://digi-media-agent-388045277937.me-west1.run.app/webhook",
+      "responseSize": "115",
+      "serverIp": "34.143.78.2",
+      "status": 200
+    },
+    "insertId": "6aac2198000bf0d492211303",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-09-17T17:21:28.787670910Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "97d466e0a3f29a30",
+    "timestamp": "2026-09-17T17:21:28.342362Z",
+    "trace": "projects/digi-media-agent/traces/194f3e4a74f05d28d005ecbb6a69ba9d",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6aac217f0005be152c7913e7",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T17:21:03.446959603Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:13014 - \"POST /webhook HTTP/1.1\" 200 OK",
+    "timestamp": "2026-09-17T17:21:03.376341Z"
+  },
+  {
+    "insertId": "6aac217f0001a4a0ed57420a",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T17:21:03.116531851Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "{'update_id': 583195320, 'message': {'message_id': 133, 'from': {'id': 8621732852, 'is_bot': False, 'first_name': 'Hila', 'last_name': 'Ribalov', 'language_code': 'en'}, 'chat': {'id': 8621732852, 'first_name': 'Hila', 'last_name': 'Ribalov', 'type': 'private'}, 'date': 1789665662, 'text': 'אתה שולח?'}}",
+    "timestamp": "2026-09-17T17:21:03.107680Z"
+  },
+  {
+    "insertId": "6aac217f0001a48c4b47efaf",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T17:21:03.116531851Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "Received update from Telegram:",
+    "timestamp": "2026-09-17T17:21:03.107660Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.271644686s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "91.108.5.71",
+      "requestMethod": "POST",
+      "requestSize": "621",
+      "requestUrl": "https://digi-media-agent-388045277937.me-west1.run.app/webhook",
+      "responseSize": "115",
+      "serverIp": "34.143.78.2",
+      "status": 200
+    },
+    "insertId": "6aac217f0005c1b0958c0ba8",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-09-17T17:21:03.381660633Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "69c6b3af25b06a75",
+    "timestamp": "2026-09-17T17:21:03.097589Z",
+    "trace": "projects/digi-media-agent/traces/04c0867a9694af97abc67eb13a27bccf",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6aac2025000a75c268e99d1e",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T17:15:17.695587318Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:27772 - \"POST /webhook HTTP/1.1\" 200 OK",
+    "timestamp": "2026-09-17T17:15:17.685506Z"
+  },
+  {
+    "insertId": "6aac20250003b8808debaa58",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T17:15:17.362331496Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "{'update_id': 583195319, 'callback_query': {'id': '136572489499212131', 'from': {'id': 8621732852, 'is_bot': False, 'first_name': 'Hila', 'last_name': 'Ribalov', 'language_code': 'en'}, 'message': {'message_id': 125, 'from': {'id': 8413894439, 'is_bot': True, 'first_name': 'דיגי הלל', 'username': 'Digital_collector_hillel_bot'}, 'chat': {'id': 8621732852, 'first_name': 'Hila', 'last_name': 'Ribalov', 'type': 'private'}, 'date': 1789665043, 'text': \"אני מציע ליצור את התיקייה 'הכנה למשלחת ביקור משפחתי - 16-17.9' תחת הקטגוריה 'אירועים'\", 'reply_markup': {'inline_keyboard': [[{'text': 'אשרי תיקייה', 'callback_data': 'approve_folder'}, {'text': 'דחי והזיני תיקון', 'callback_data': 'reject_folder'}]]}}, 'chat_instance': '7001583392635709288', 'data': 'approve_folder'}}",
+    "timestamp": "2026-09-17T17:15:17.243840Z"
+  },
+  {
+    "insertId": "6aac20250003b8715214d185",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T17:15:17.362331496Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "Received update from Telegram:",
+    "timestamp": "2026-09-17T17:15:17.243825Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.444183752s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "91.108.5.71",
+      "requestMethod": "POST",
+      "requestSize": "1484",
+      "requestUrl": "https://digi-media-agent-388045277937.me-west1.run.app/webhook",
+      "responseSize": "115",
+      "serverIp": "34.143.78.2",
+      "status": 200
+    },
+    "insertId": "6aac2025000a78bcba26b88f",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-09-17T17:15:17.845042479Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "e73552471578abba",
+    "timestamp": "2026-09-17T17:15:17.240286Z",
+    "trace": "projects/digi-media-agent/traces/afdbbba70b2f7e6aa6f06cb3c8b39eb1"
+  },
+  {
+    "insertId": "6aac201f0007d180112ac3a2",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T17:15:11.706124345Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:25634 - \"POST /webhook HTTP/1.1\" 200 OK",
+    "timestamp": "2026-09-17T17:15:11.512384Z"
+  },
+  {
+    "insertId": "6aac201f000070f239f29715",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T17:15:11.037054933Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "{'update_id': 583195318, 'callback_query': {'id': '136572487090649020', 'from': {'id': 8621732852, 'is_bot': False, 'first_name': 'Hila', 'last_name': 'Ribalov', 'language_code': 'en'}, 'message': {'message_id': 125, 'from': {'id': 8413894439, 'is_bot': True, 'first_name': 'דיגי הלל', 'username': 'Digital_collector_hillel_bot'}, 'chat': {'id': 8621732852, 'first_name': 'Hila', 'last_name': 'Ribalov', 'type': 'private'}, 'date': 1789665043, 'text': \"אני מציע ליצור את התיקייה 'הכנה למשלחת ביקור משפחתי - 16-17.9' תחת הקטגוריה 'אירועים'\", 'reply_markup': {'inline_keyboard': [[{'text': 'אשרי תיקייה', 'callback_data': 'approve_folder'}, {'text': 'דחי והזיני תיקון', 'callback_data': 'reject_folder'}]]}}, 'chat_instance': '7001583392635709288', 'data': 'approve_folder'}}",
+    "timestamp": "2026-09-17T17:15:11.028914Z"
+  },
+  {
+    "insertId": "6aac201f000070cfbae981ef",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-09-17T17:15:11.037054933Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "Received update from Telegram:",
+    "timestamp": "2026-09-17T17:15:11.028879Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.486599420s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "91.108.5.71",
+      "requestMethod": "POST",
+      "requestSize": "1484",
+      "requestUrl": "https://digi-media-agent-388045277937.me-west1.run.app/webhook",
+      "responseSize": "115",
+      "serverIp": "34.143.78.2",
+      "status": 200
+    },
+    "insertId": "6aac201f0007d495d4d195c3",
+    "labels": {
+      "instanceId": "00a41e8c1d5423016c2d0ff24dc6176f731abef11bdfb8e180c702e14d5c5cf0cd5dea535054a5e4555357b0232ff32a192e4568a13cd16ddb316ae75c9074146e6c3f8469c19890a61b2d1b"
+    },
+    "logName": "projects/digi-media-agent/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-09-17T17:15:11.522710569Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "digi-media-agent",
+        "location": "me-west1",
+        "project_id": "digi-media-agent",
+        "revision_name": "digi-media-agent-00011-sx7",
+        "service_name": "digi-media-agent"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "2b95ad390543a382",
+    "timestamp": "2026-09-17T17:15:11.017301Z",
+    "trace": "projects/digi-media-agent/traces/f7ea7368e327a096a6f06cb3c8b39d43",
+    "traceSampled": true
+  }
+]

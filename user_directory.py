@@ -8,6 +8,8 @@ def _load_users():
         # Return mock users for testing
         return {
             "hila.ribalov@gmail.com": {"chat_id": 8621732852, "name": "הילה"},
+            "eden.kerzer@gmail.com": {"chat_id": 7860079501 , "name": "עדן"},
+            "Kerenr@hillelisrael.org": {"chat_id": 8060866350 , "name": "הילה"},
             "dani@example.com": {"chat_id": 8621732852, "name": "דני"},
             "yossi@example.com": {"chat_id": 8621732852, "name": "יוסי"}
         }
