@@ -15,9 +15,14 @@ def _load_users():
         }
 
     try:
-        with open("users.json", "r", encoding="utf-8") as f:
-            return json.load(f)
-    except FileNotFoundError:
+        from db_client import db
+        docs = db.collection("users").stream()
+        users = {}
+        for doc in docs:
+            users[doc.id] = doc.to_dict()
+        return users
+    except Exception as e:
+        print(f"Error loading from Firestore: {e}")
         return {}
 
 def get_chat_id_by_email(email: str) -> Optional[str]:

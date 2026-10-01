@@ -8,7 +8,7 @@ def test_async_webhook():
         "update_id": 123456789,
         "message": {
             "message_id": 1,
-            "chat": {"id": 987654321, "type": "private"},
+            "chat": {"id": 8621732852, "type": "private"},
             "text": "Hello Async Webhook!"
         }
     }

@@ -103,16 +103,11 @@ def process_update(update: dict):
                         email = text.strip().lower()
                         name = ONBOARDING_STATE[chat_id]["name"]
                         
-                        try:
-                            with open("users.json", "r", encoding="utf-8") as f:
-                                users = json.load(f)
-                        except FileNotFoundError:
-                            users = {}
-                        
-                        users[email] = {"chat_id": int(chat_id), "name": name}
-                        
-                        with open("users.json", "w", encoding="utf-8") as f:
-                            json.dump(users, f, ensure_ascii=False, indent=4)
+                        from db_client import db
+                        db.collection("users").document(email).set({
+                            "chat_id": int(chat_id),
+                            "name": name
+                        })
                             
                         del ONBOARDING_STATE[chat_id]
                         send_msg(chat_id, "מעולה, נרשמת בהצלחה!")

@@ -4,7 +4,7 @@ import datetime
 from langgraph.graph import StateGraph, START, END
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, SystemMessage
-from langgraph.checkpoint.memory import MemorySaver
+from db_client import FirestoreSaver
 from dotenv import load_dotenv
 
 # Import state schema and custom tool implementations
@@ -515,7 +515,7 @@ workflow.add_edge("send_reminders", END)
 workflow.add_edge("escalate_to_human", END)
 
 # Compile graph with state checkpointing and interrupt configuration
-memory = MemorySaver()
+memory = FirestoreSaver()
 
 app = workflow.compile(
     checkpointer=memory,
