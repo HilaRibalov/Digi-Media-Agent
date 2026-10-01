@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, BackgroundTasks
 import os
 import requests
 import uuid
@@ -27,14 +27,9 @@ def answer_callback(callback_query_id):
     url = f"https://api.telegram.org/bot{token}/answerCallbackQuery"
     requests.post(url, json={"callback_query_id": callback_query_id}, timeout=10)
 
-@app.post("/webhook")
-async def telegram_webhook(request: Request):
+def process_update(update: dict):
     global ACTIVE_THREAD_ID
     try:
-        update = await request.json()
-        print("Received update from Telegram:")
-        print(update)
-        
         manager_chat_id = get_manager_chat_id()
         config = {"configurable": {"thread_id": ACTIVE_THREAD_ID}}
         
@@ -42,7 +37,7 @@ async def telegram_webhook(request: Request):
             cb = update["callback_query"]
             chat_id = str(cb["message"]["chat"]["id"])
             if chat_id != str(manager_chat_id):
-                return {"status": "ignored"}
+                return
                 
             data = cb.get("data")
             cb_id = cb.get("id")
@@ -58,7 +53,7 @@ async def telegram_webhook(request: Request):
                 manager_state["awaiting_feedback"] = True
                 send_msg(chat_id, "התיקייה נדחתה. אנא כתבי בהודעה הבאה מה התיקון הנדרש.")
                 
-            return {"status": "ok"}
+            return
             
         if "message" in update:
             msg = update["message"]
@@ -69,13 +64,13 @@ async def telegram_webhook(request: Request):
                 if text.strip() == "תזכורת יומית":
                     send_msg(chat_id, "יוזם בדיקת חוסרים ושליחת תזכורות לכל מי שטרם העלה תמונות...")
                     graph_app.invoke({"wakeup_reason": "daily_cron"}, config=config)
-                    return {"status": "ok"}
+                    return
                 elif manager_state.get("awaiting_feedback") and text:
                     manager_state["awaiting_feedback"] = False
                     graph_app.update_state(config, {"user_feedback": text})
                     for _ in graph_app.stream(Command(resume=True), config):
                         pass
-                    return {"status": "ok"}
+                    return
                 elif text.startswith("אירוע חדש:"):
                     ACTIVE_THREAD_ID = str(uuid.uuid4())
                     config = {"configurable": {"thread_id": ACTIVE_THREAD_ID}}
@@ -83,7 +78,7 @@ async def telegram_webhook(request: Request):
                     for _ in graph_app.stream(None, config):
                         pass
                     send_msg(chat_id, "קיבלתי! מתחיל לתכנן את האירוע...")
-                    return {"status": "ok"}
+                    return
             
             if text:
                 user_info = get_user_info_by_chat_id(chat_id)
@@ -122,8 +117,21 @@ async def telegram_webhook(request: Request):
                         del ONBOARDING_STATE[chat_id]
                         send_msg(chat_id, "מעולה, נרשמת בהצלחה!")
                     
-            return {"status": "ok"}
+            return
 
+        return
+    except Exception as e:
+        print(f"Error processing webhook background task: {e}")
+
+@app.post("/webhook")
+async def telegram_webhook(request: Request, background_tasks: BackgroundTasks):
+    try:
+        update = await request.json()
+        print("Received update from Telegram:")
+        print(update)
+        
+        background_tasks.add_task(process_update, update)
+        
         return {"status": "ok"}
     except Exception as e:
         print(f"Error processing webhook: {e}")
