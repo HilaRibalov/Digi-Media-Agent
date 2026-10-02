@@ -206,3 +206,11 @@ def request_folder_approval(category_name: str, folder_name: str) -> None:
             print(f"[Telegram API Error] Failed to send approval request: {e}")
     else:
         print(f"\n[Tool Execution] Manager Approval Request: {msg_text}")
+
+@tool
+def get_all_contacts() -> list:
+    """Returns a list of all available team contacts (emails). Use this when the manager asks to include 'everyone' or 'all'."""
+    from user_directory import _load_users
+    users = _load_users()
+    return list(users.keys())
+

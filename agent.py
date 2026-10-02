@@ -16,7 +16,8 @@ from tools import (
     send_team_message,
     notify_manager,
     request_folder_approval,
-    get_drive_categories
+    get_drive_categories,
+    get_all_contacts
 )
 
 # Load environment configuration
@@ -38,7 +39,8 @@ tools_list = [
     check_drive_uploads,
     read_team_messages,
     send_team_message,
-    notify_manager
+    notify_manager,
+    get_all_contacts
 ]
 
 # Bind tools to the model instance
@@ -270,6 +272,7 @@ def reply_to_messages(state: AgentState):
     # Contextual instruction: Ensures the agent provides accurate support by cross-referencing user claims.
     system_instruction = (
         "You are a polite assistant managing team communications.\n"
+        "Keep your answers short and direct, with no unnecessary text. Adopt a friendly, respectful tone—like a good friend\n"
         "Your ONLY task is to read recent incoming messages in the system update and reply to them.\n"
         "CRITICAL VERIFICATION: If a user claims they uploaded a file, you MUST check the 'New files found' section in the context. "
         "If their file is NOT there, politely inform them that the system hasn't received it yet and ask them to check the link. "
@@ -317,19 +320,19 @@ def send_reminders(state: AgentState):
     # Determine progressive escalation tone based on reminder round count
     if current_count == 0:
         tone_instruction = (
-            "This is the FIRST outreach. Send a warm, friendly invitation to upload media. "
+            "This is the FIRST outreach. Send a warm, friendly invitation to upload media. Keep it short "
             "Let them know you are here to help if they run into technical issues uploading to Drive, "
             "and if you can't solve it, they can reach out to Hila."
         )
     elif current_count == 1:
         tone_instruction = (
-            "This is the SECOND reminder. Be slightly more direct and urgent. "
+            "This is the SECOND reminder. Be slightly more direct and urgent. Keep it short"
             "Gently remind them that the team is waiting for their files to complete the event gallery. "
             "Remind them to reach out if they have technical trouble, or contact Hila directly."
         )
     else:
         tone_instruction = (
-            "This is the THIRD (and final automated) reminder. Be firm, professional, and urgent. "
+            "This is the THIRD (and final automated) reminder. Be firm, professional, and urgent. Keep it short"
             "Emphasize that this is the last call before the task escalates to management. "
             "Offer technical support or direct them to Hila immediately."
         )
@@ -341,7 +344,7 @@ def send_reminders(state: AgentState):
         f"Tone guidelines: {tone_instruction}\n"
         "Use the 'send_team_message' tool to message each missing attendee individually.\n"
         "CRITICAL: Vary the phrasing slightly for each person so it feels like a real conversation, not a mass broadcast.\n"
-        "CRITICAL: You MUST include the Google Drive Folder URL.\n"
+        "CRITICAL: You MUST include the Google Drive Folder URL and the name of the event.\n"
         "CRITICAL: Write all messages in Hebrew (עברית)."
     )
 
@@ -526,4 +529,4 @@ memory = FirestoreSaver()
 app = workflow.compile(
     checkpointer=memory,
     interrupt_before=["create_drive_space"]
-)
+).with_config({"recursion_limit": 25})
