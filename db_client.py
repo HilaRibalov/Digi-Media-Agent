@@ -33,8 +33,7 @@ class FirestoreSaver(BaseCheckpointSaver):
             # Simple implementation: only fetching the latest checkpoint for the given thread_id + ns
             return None
             
-        checkpoint_dict = data.get("checkpoint")
-        if not checkpoint_dict:
+        if "checkpoint_bytes" not in data:
             return None
             
         return CheckpointTuple(

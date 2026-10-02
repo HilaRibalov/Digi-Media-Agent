@@ -190,7 +190,9 @@ def evaluate_and_filter(state: AgentState):
         print("[Node] No missing attendees left!")
         return {"collection_phase_status": "finished", "trigger_post_creation": True}
 
-    last_system_msg = state["messages"][-1].content
+    from langchain_core.messages import trim_messages
+    trimmed_msgs = trim_messages(state["messages"], max_tokens=10, token_counter=len, strategy="last")
+    last_system_msg = "\n".join([m.content for m in trimmed_msgs])
 
     # Instruction defining strict logical criteria for attendance list updates.
     # CRITICAL FIX: Expanded exemption criteria to include lack of media.
@@ -277,7 +279,9 @@ def reply_to_messages(state: AgentState):
         "DO NOT send general reminders here."
     )
 
-    recent_context = "\n".join([m.content for m in state["messages"][-2:]])
+    from langchain_core.messages import trim_messages
+    trimmed_msgs = trim_messages(state["messages"], max_tokens=10, token_counter=len, strategy="last")
+    recent_context = "\n".join([m.content for m in trimmed_msgs])
 
     prompt_messages = [
         SystemMessage(content=system_instruction),
@@ -341,7 +345,9 @@ def send_reminders(state: AgentState):
         "CRITICAL: Write all messages in Hebrew (עברית)."
     )
 
-    recent_context = "\n".join([m.content for m in state["messages"][-2:]])
+    from langchain_core.messages import trim_messages
+    trimmed_msgs = trim_messages(state["messages"], max_tokens=10, token_counter=len, strategy="last")
+    recent_context = "\n".join([m.content for m in trimmed_msgs])
     prompt_messages = [
         SystemMessage(content=system_instruction),
         HumanMessage(content=f"Context from recent steps:\n{recent_context}")
